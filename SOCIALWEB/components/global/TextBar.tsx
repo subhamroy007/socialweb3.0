@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
     GAP_SIZE_REF_14,
@@ -10,12 +10,12 @@ import {
 import CustomTextInput from "./CustomTextInput";
 import Icon from "./Icon";
 
-const TextBar = () => {
+const TextBar = ({ style }: { style?: StyleProp<ViewStyle> }) => {
     const sendTextHandler = useCallback(() => {}, []);
     const textChangeHandler = (text: string) => {};
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, style]}>
             <SafeAreaView style={styles.textBar}>
                 <CustomTextInput
                     placeHolder="Message"
@@ -23,7 +23,7 @@ const TextBar = () => {
                     style={{ paddingHorizontal: GAP_SIZE_REF_14 }}
                     inputChangeHandler={textChangeHandler}
                 />
-                <SafeAreaView style={styles.iconHolder}>
+                <SafeAreaView style={styles.iconContainer}>
                     <Icon
                         name="paperclip"
                         size={28}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         borderRadius: GAP_SIZE_REF_16,
         paddingHorizontal: GAP_SIZE_REF_2,
     },
-    iconHolder: {
+    iconContainer: {
         flexDirection: "row",
         width: "20%",
         justifyContent: "space-between",
