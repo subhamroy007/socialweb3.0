@@ -1,39 +1,14 @@
 import "expo-dev-client";
-import {
-  BottomTabHeaderProps,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import { enableScreens } from "react-native-screens";
-import NotificationScreen from "./screens/NotificationScreen";
-import SearchResultScreen from "./screens/SearchResultScreen";
-import TrendingScreen from "./screens/TrendingScreen";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { Provider } from "react-redux";
 import appStore from "./store/appStore";
-import AdvancedShutter from "./components/shutter/AdvancedShutter";
-import NewImageFeedScreen from "./screens/NewImageFeedScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import SavedDataScreen from "./screens/SavedDataScreen";
-import {
-  HashtagInfoScreenHeader,
-  ImageFeedScreenHeader,
-  NotificationScreenHeader,
-  OtherUserProfileScreenHeader,
-  ProfileScreenHeader,
-  SavedScreenHeader,
-  SearchScreenHeader,
-  TrendingScreenHeader,
-} from "./components/global/headers";
-import { MainTabNavigationParamList } from "./utility/types";
 import RootStackNavigator from "./navigations/RootStackNavigator";
 
 enableScreens(true);
-
-const MainTabNavigation =
-  createBottomTabNavigator<MainTabNavigationParamList>();
 
 //takes a list of font family records and loads them all asynchronously
 const loadFontsAsync = (fontList: Record<string, Font.FontSource>[]) => {
@@ -70,6 +45,9 @@ const App = () => {
         await SplashScreen.preventAutoHideAsync();
         //calling the function that loads the fonts asin
         await Promise.all(loadFontsAsync([appTextFonts]));
+
+        // await fetch("mockapi/reply");
+        console.log("api called");
       } catch (error) {
         console.warn("something went wrong while loading the app assest");
         console.warn(error);

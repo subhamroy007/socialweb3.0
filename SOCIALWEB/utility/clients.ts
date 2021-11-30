@@ -1,16 +1,14 @@
-import { AppError, ImageFeedScreenResponse } from "./types";
+import { serveImageFeed } from "../server/routes/imagePost";
+import { AppError } from "./types2";
 
-export const getImagePostFeed = async (
-  hasStoryFeed: boolean,
-  hasImageFeed: boolean = true,
-  pageNo: number = 0,
+export const getImageFeed = async (
+  pageId: number,
+  userId: string,
   customHeaders: HeadersInit
 ) => {
   try {
-    const response = await fetch(
-      `https://mockapi/imagepostfeed/${hasImageFeed ? "hasimagefeed" : ""}/${
-        hasStoryFeed ? "hasstoryfeed" : ""
-      }?pageNo=${pageNo}`,
+    /*const response = await fetch(
+      `https://mockapi/imagefeed/?pageNo=${pageNo}`,
       {
         method: "GET",
         cache: "no-cache",
@@ -23,7 +21,9 @@ export const getImagePostFeed = async (
       }
     );
 
-    const responseBody = (await response.json()) as ImageFeedScreenResponse;
+    const responseBody = (await response.json()) as ImageFeedResponse;*/
+
+    const responseBody = serveImageFeed(pageId, userId);
 
     return responseBody;
   } catch (e: any) {

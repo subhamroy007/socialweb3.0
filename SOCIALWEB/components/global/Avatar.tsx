@@ -1,62 +1,65 @@
-import React, { useMemo } from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import FastImage, { ImageStyle, Source } from "react-native-fast-image";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { RootState, useAppSelector } from "../../store/appStore";
+import { selectProfilePictureUrl } from "../../store/user/selector";
 import { AVATAR_PHOTO_TO_GAP_RATIO } from "../../utility/constants";
 import { AvatarProps } from "../../utility/types";
 
-const Avatar = ({ size, url, style }: AvatarProps) => {
-  //source of the image with high priority and immutable caching mechanism
+const Avatar = ({ size, id, style, showStoryIndicator }: AvatarProps) => {
+  const profilePictureUrlSelectorCallback = useCallback(
+    (state: RootState) => selectProfilePictureUrl(state, id),
+    [id]
+  );
+
+  const profilePictureUrl = useAppSelector(profilePictureUrlSelectorCallback);
+
   const avatarSource: Source = useMemo(
     () => ({
-      uri: url,
+      uri: profilePictureUrl,
       cache: "immutable",
       priority: "high",
     }),
-    [url]
+    [id]
   );
 
-  //calculate the dynamic width, height  and border-radius of the image based on the size prop
-  const avatarDynamicStyle: ImageStyle = useMemo(() => {
-    const imageSize = size * (1 - 4 * AVATAR_PHOTO_TO_GAP_RATIO);
+  const avatarStyle: ImageStyle = useMemo(() => {
+    const imageSize = showStoryIndicator
+      ? size * (1 - 4 * AVATAR_PHOTO_TO_GAP_RATIO)
+      : size;
 
     return {
       width: imageSize,
       height: imageSize,
       borderRadius: imageSize * 0.5,
     };
-  }, [size]);
+  }, [size, showStoryIndicator]);
 
-  //calculate the dynamic style of the avatar container based on the size prop
-  const avatarContainerDynamicStyle: StyleProp<ViewStyle> = useMemo(
-    () => ({
-      padding: size * AVATAR_PHOTO_TO_GAP_RATIO,
-      borderWidth: size * AVATAR_PHOTO_TO_GAP_RATIO,
-      borderRadius: size * 0.5,
-      height: size,
-      width: size,
-    }),
-    [size]
+  const containerStyleList: StyleProp<ViewStyle>[] = useMemo(
+    () => [
+      {
+        borderWidth: showStoryIndicator
+          ? size * AVATAR_PHOTO_TO_GAP_RATIO
+          : undefined,
+        borderRadius: size * 0.5,
+        height: size,
+        width: size,
+      },
+      showStoryIndicator ? styles.container : undefined,
+      style,
+    ],
+    [size, showStoryIndicator]
   );
 
   return (
-    <SafeAreaView
-      edges={[]}
-      style={[avatarContainerDynamicStyle, styles.conatainer, style]}
-    >
-      {/* a fast image component base on the source with cover resizing so that the image can fill the rounded
-      border */}
-      <FastImage
-        source={avatarSource}
-        resizeMode="cover"
-        style={[avatarDynamicStyle]}
-      />
-    </SafeAreaView>
+    <View style={containerStyleList}>
+      <FastImage source={avatarSource} resizeMode="cover" style={avatarStyle} />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  conatainer: {
+  container: {
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#3F71F2",

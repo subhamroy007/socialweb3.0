@@ -1,18 +1,19 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { StyleProp, StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, View } from "react-native";
 import FastImage, {
   ImageStyle,
   ResizeMode,
   Source,
 } from "react-native-fast-image";
 import {
-  GestureHandlerRootView,
   HandlerStateChangeEvent,
   State,
   TapGestureHandler,
   TapGestureHandlerEventPayload,
 } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { RootState, useAppSelector } from "../../store/appStore";
+import { selectImageList } from "../../store/imagePost/selector";
 import {
   IMAGE_POST_MAX_HEIGHT,
   IMAGE_POST_MIN_HEIGHT,
@@ -20,22 +21,28 @@ import {
 } from "../../utility/constants";
 import ImageFeedPostOverlay from "./ImageFeedPostOverlay";
 
-export interface ImageFeedSinglePostProps {
-  url: string;
-  width: number;
-  height: number;
+export interface ImagePostBodyProps {
+  id: string;
 }
 
-const ImageFeedSinglePost = ({
-  url,
-  height,
-  width,
-}: ImageFeedSinglePostProps) => {
+const ImagePostBody = ({ id }: ImagePostBodyProps) => {
   const [isOverlayVisible, setOverlayVisible] = useState<boolean>(false);
 
-  const imageSource: Source = useMemo(
-    () => ({ cache: "immutable", priority: "high", uri: url }),
-    [url]
+  const imageListSelectorCallback = useCallback(
+    (state: RootState) => selectImageList(state, id),
+    [id]
+  );
+
+  const imageList = useAppSelector(imageListSelectorCallback);
+
+  const imageSourceList: Source[] | undefined = useMemo(
+    () =>
+      imageList?.map<Source>((item) => ({
+        cache: "immutable",
+        priority: "high",
+        uri: item.url,
+      })),
+    [imageList]
   );
 
   const { resizeMode, scaledHeight } = useMemo(() => {
@@ -71,33 +78,31 @@ const ImageFeedSinglePost = ({
   );
 
   return (
-    <SafeAreaView edges={[]} style={[styles.imageFeedSinglePostContainer]}>
-      <GestureHandlerRootView>
-        <TapGestureHandler
-          minPointers={1}
-          maxDurationMs={600}
-          maxDelayMs={600}
-          numberOfTaps={1}
-          maxDeltaX={width}
-          maxDeltaY={height}
-          shouldCancelWhenOutside={true}
-          onHandlerStateChange={singleTapHandler}
-        >
-          <SafeAreaView edges={[]}>
-            <FastImage
-              source={imageSource}
-              resizeMode={resizeMode}
-              style={[imageResolution]}
-            />
-            <ImageFeedPostOverlay
-              height={scaledHeight}
-              width={WINDOW_WIDTH}
-              isVisible={isOverlayVisible}
-            />
-          </SafeAreaView>
-        </TapGestureHandler>
-      </GestureHandlerRootView>
-    </SafeAreaView>
+    <View style={[styles.imageFeedSinglePostContainer]}>
+      <TapGestureHandler
+        minPointers={1}
+        maxDurationMs={600}
+        maxDelayMs={600}
+        numberOfTaps={1}
+        maxDeltaX={width}
+        maxDeltaY={height}
+        shouldCancelWhenOutside={true}
+        onHandlerStateChange={singleTapHandler}
+      >
+        <SafeAreaView edges={[]}>
+          <FastImage
+            source={imageSource}
+            resizeMode={resizeMode}
+            style={[imageResolution]}
+          />
+          <ImageFeedPostOverlay
+            height={scaledHeight}
+            width={WINDOW_WIDTH}
+            isVisible={isOverlayVisible}
+          />
+        </SafeAreaView>
+      </TapGestureHandler>
+    </View>
   );
 };
 
@@ -110,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ImageFeedSinglePost;
+export default ImagePostBody;

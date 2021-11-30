@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { MetaScreenHeader } from "../components/global/headers";
 import LiveScreen from "../screens/LiveScreen";
+import OverlayScreen from "../screens/OverlayScreen";
 import StoryFeedScreen from "../screens/StoryFeedScreen";
 import { RootStackNavigatorParamList } from "../utility/types";
 import PostMetaNavigator from "./PostMetaNavigator";
@@ -20,6 +21,15 @@ const RootStackNavigator = () => {
     >
       <StackNavigator.Screen name="Tabs" component={RootTabNavigator} />
       <StackNavigator.Screen name="LiveScreen" component={LiveScreen} />
+      <StackNavigator.Screen
+        name="OverlayScreen"
+        component={OverlayScreen}
+        options={{
+          presentation: "transparentModal",
+          cardStyle: { backgroundColor: "transparent" },
+          detachPreviousScreen: false,
+        }}
+      />
       <StackNavigator.Screen
         name="StoryFeedScreen"
         component={StoryFeedScreen}

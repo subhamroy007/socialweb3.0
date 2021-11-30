@@ -1,17 +1,21 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { imagePostReducer } from "./imagePostSlice/imagePostSlice";
-import { storyReducer } from "./storySlice/storySlice";
-import { userProfileReducer } from "./userProfileSlice/userProfileSlice";
-import { userReducer } from "./userSlice/userSlice";
+import { appDataReducer } from "./appData/slice";
+import { commentReducer } from "./comment/slice";
+import { hashTagReducer } from "./hashTag/slice";
+import { imagePostReducer } from "./imagePost/slice";
+import { replyReducer } from "./reply/slice";
+import { userReducer } from "./user/slice";
 
 //creating a single store for the entire app
 const appStore = configureStore({
   reducer: {
     imagePost: imagePostReducer, //reducer slice that interacts with the ImagePostEntity
     user: userReducer, //reducer slice that interacts with the UserEntity
-    story: storyReducer, //reducer slice that interacts with the StoryEntity
-    userProfile: userProfileReducer, //reducer slice that interacts with UserProfileEntity
+    appData: appDataReducer,
+    reply: replyReducer,
+    comment: commentReducer,
+    hashTag: hashTagReducer,
   },
   // devTools: false, //devtools extension is unnesessary
   // enhancers: [], //no enhancers are added at the moment

@@ -7,6 +7,7 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native";
+import { AppDispatch, RootState } from "../store/appStore";
 
 //defining the generic id and timestamp pair interface
 export interface IdTimeStampPair {
@@ -28,13 +29,17 @@ export interface ImageInfo {
 }
 
 //utility type to represent any aribtrary task state
-export type taskState = "idle" | "success" | "loading" | "failure";
+export type TaskState =
+  | "idle/init"
+  | "idle/success"
+  | "loading"
+  | "idle/failure";
 
 //type to represent additional data of the image post slice
 export interface ImagePostMetaState {
   imagePostFeedMeta: {
     //either the image feed is loading or successfully loaded or failed
-    feedState: taskState;
+    feedState: TaskState;
     //list of all the post ids that is part of the current user feed
     feedList: string[];
     //most recent feed request page no
@@ -48,70 +53,70 @@ export interface ImagePostMetaState {
 }
 
 //defining the data structure of the ImagePost
-export interface ImagePost {
-  id: string; //unique id of the post
-  content: ImageInfo[] | ImageInfo; //single or multiple string representing the image links
-  caption?: string; //caption associated with the post
-  timestamp: number; //date when the post created in miliseconds
-  author: string; //userId of the post author
-  hashtagList?: string[]; //list of hashtag ids used in the post
-  likeInfo: {
-    //list of the user ids who liked the post
-    noOfLikes: number;
-    likeList?: IdTimeStampPair[];
-    filteredUsers?: string[];
-  };
-  commentInfo: {
-    //list of the comment ids in the post
-    noOfComments: number;
-    commentList?: Comment[];
-    filteredUsers?: string[];
-  };
-  shareInfo: {
-    //list of the use ids who shared the post via diffrent options
-    noOfShares: number;
-    shareList?: IdTimeStampPair[];
-    filteredShareList?: string[];
-  };
-  tagInfo: {
-    noOfTags: number;
-    tagList?: string[];
-  }; //list of the users tagged in the post
-}
+// export interface ImagePost {
+//   id: string; //unique id of the post
+//   content: ImageInfo[] | ImageInfo; //single or multiple string representing the image links
+//   caption?: string; //caption associated with the post
+//   timestamp: number; //date when the post created in miliseconds
+//   author: string; //userId of the post author
+//   hashtagList?: string[]; //list of hashtag ids used in the post
+//   likeInfo: {
+//     //list of the user ids who liked the post
+//     noOfLikes: number;
+//     likeList?: IdTimeStampPair[];
+//     filteredUsers?: string[];
+//   };
+//   commentInfo: {
+//     //list of the comment ids in the post
+//     noOfComments: number;
+//     commentList?: Comment[];
+//     filteredUsers?: string[];
+//   };
+//   shareInfo: {
+//     //list of the use ids who shared the post via diffrent options
+//     noOfShares: number;
+//     shareList?: IdTimeStampPair[];
+//     filteredShareList?: string[];
+//   };
+//   tagInfo: {
+//     noOfTags: number;
+//     tagList?: string[];
+//   }; //list of the users tagged in the post
+// }
 
 //defining User Data Structure
-export interface User {
-  id: string; //userid
-  socialId: string; //unique social id
-  username: string; //optional username
-  storyInfo: {
-    //user story informition
-    noOfStories: number; //number of seen and unseen stories
-    hasUnSeenStory: boolean; //is the logged in user has yet to see any story of this user
-    storyList?: string[]; //id of the stories
-  };
-  followerInfo: {
-    //follower information
-    noOfFollowers: number; //total number of followers
-    followerList?: string[]; //list of userids
-    isFollower: boolean;
-  };
-  followingInfo: {
-    //following  information
-    noOfFollowing: number; //total number of followings
-    followingList?: string[]; //list of the userids
-    isFollowing: boolean;
-  };
-  posts: {
-    //post information
-    noOfPosts: number; //total number of posts
-    imagePost: {
-      //image post information
-      noOfImagePosts: number;
-      imagePostList?: string[];
-    };
-  };
-}
+// export interface User {
+//   id: string; //userid
+//   socialId: string; //unique social id
+//   username: string; //optional username
+//   storyInfo: {
+//     //user story informition
+//     noOfStories: number; //number of seen and unseen stories
+//     hasUnSeenStory: boolean; //is the logged in user has yet to see any story of this user
+//     storyList?: string[]; //id of the stories
+//   };
+//   followerInfo: {
+//     //follower information
+//     noOfFollowers: number; //total number of followers
+//     followerList?: string[]; //list of userids
+//     isFollower: boolean;
+//   };
+//   followingInfo: {
+//     //following  information
+//     noOfFollowing: number; //total number of followings
+//     followingList?: string[]; //list of the userids
+//     isFollowing: boolean;
+//   };
+//   posts: {
+//     //post information
+//     noOfPosts: number; //total number of posts
+//     imagePost: {
+//       //image post information
+//       noOfImagePosts: number;
+//       imagePostList?: string[];
+//     };
+//   };
+// }
 
 //defining the messaage data structure of stories
 export interface PrivateStoryMessage {
@@ -131,16 +136,6 @@ export interface Story {
   hasSeen: boolean;
 }
 
-//a utility type to represent user data
-export interface UserInfoResponse {
-  id: string;
-  socialId: string;
-  username: string;
-  profilePictureUrl: string;
-  isFollower: boolean;
-  isFollowing: boolean;
-}
-
 //a speicific story data response
 export interface StoryInfoResponse {
   id: string;
@@ -158,11 +153,7 @@ export interface StoryResponse {
 }
 
 //a utility type to represent page data
-export interface PageInfoResponse<T> {
-  pageNo: number;
-  pageSize: number;
-  pageLength: number;
-  totalNoOfPages: number;
+export interface PageInfoResponse<T> extends PageInfo {
   list?: T[];
 }
 
@@ -194,33 +185,33 @@ export interface CommentResponse extends ReplyResponse {
 }
 
 //a specific image post response
-export interface ImagePostResponse {
-  id: string;
-  content: ImageInfo[] | ImageInfo;
-  caption?: string;
-  timestamp: number;
-  author: UserInfoResponse;
-  hashtagList?: string[];
-  likeInfo: {
-    noOfLikes: number;
-    pageInfo: PageInfoResponse<UserInfoWithTimeStampResponse>;
-    filteredUsers?: string[];
-  };
-  commentInfo: {
-    noOfComments: number;
-    pageInfo: PageInfoResponse<CommentResponse>;
-    filteredUsers?: string[];
-  };
-  shareInfo: {
-    noOfShares: number;
-    pageInfo: PageInfoResponse<UserInfoWithTimeStampResponse>;
-    filteredShareList?: string[];
-  };
-  tagInfo: {
-    noOfTags: number;
-    pageInfo: PageInfoResponse<UserInfoResponse>;
-  };
-}
+// export interface ImagePostResponse {
+//   id: string;
+//   content: ImageInfo[] | ImageInfo;
+//   caption?: string;
+//   timestamp: number;
+//   author: UserInfoResponse;
+//   hashtagList?: string[];
+//   likeInfo: {
+//     noOfLikes: number;
+//     pageInfo: PageInfoResponse<UserInfoWithTimeStampResponse>;
+//     filteredUsers?: string[];
+//   };
+//   commentInfo: {
+//     noOfComments: number;
+//     pageInfo: PageInfoResponse<CommentResponse>;
+//     filteredUsers?: string[];
+//   };
+//   shareInfo: {
+//     noOfShares: number;
+//     pageInfo: PageInfoResponse<UserInfoWithTimeStampResponse>;
+//     filteredShareList?: string[];
+//   };
+//   tagInfo: {
+//     noOfTags: number;
+//     pageInfo: PageInfoResponse<UserInfoResponse>;
+//   };
+// }
 
 //full response of image feed screen loading data
 export interface ImageFeedScreenResponse {
@@ -320,6 +311,7 @@ export type RootStackNavigatorParamList = {
   LiveScreen: undefined;
   StoryFeedScreen: undefined;
   PostMetaInfoStack: undefined;
+  OverlayScreen: undefined;
 };
 
 export interface GenericTabBarIconProps {
@@ -374,7 +366,8 @@ export type PostMetaNavigatorParamList = {
 
 export interface AvatarProps {
   size: number;
-  url: string;
+  id: string;
+  showStoryIndicator: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -471,7 +464,7 @@ export interface CountListPair<T> {
   list: T[];
 }
 
-export interface UserEntity {
+export interface User {
   id: string;
   socialId: string;
   timestamp: number;
@@ -483,26 +476,26 @@ export interface UserEntity {
   followingInfo: CountListPair<IdTimeStampPair>;
   uploads: {
     noOfUploads: number;
-    imagePost: CountListPair<string>;
+    imagePosts: CountListPair<string>;
   };
   saves: {
     noOfSaves: number;
-    imagePost: CountListPair<string>;
+    imagePosts: CountListPair<string>;
     hashtags: CountListPair<string>;
   };
   tags: {
     noOfTags: number;
-    imagePost: CountListPair<string>;
+    imagePosts: CountListPair<string>;
   };
 }
 
 export interface HashTagEntity {
   id: string;
   name: string;
-  saveInfo: CountListPair<IdTimeStampPair>;
+  saveInfo: CountListPair<string>;
   uploads: {
     noOfUploads: number;
-    imagePost: CountListPair<string>;
+    imagePosts: CountListPair<string>;
   };
 }
 
@@ -512,15 +505,15 @@ export interface GenericData {
   author: string;
 }
 
-export interface PostMetaData {
+export interface PostData {
   likeInfo: CountListPair<IdTimeStampPair>;
-  commentInfo: CountListPair<Comment>;
+  commentInfo: CountListPair<string>;
   shareInfo: CountListPair<IdTimeStampPair>;
-  tagInfo: CountListPair<IdTimeStampPair>;
+  tagInfo: CountListPair<string>;
   hashTagInfo: CountListPair<string>;
 }
 
-export interface ImagePostEntity extends GenericData, PostMetaData {
+export interface ImagePost extends GenericData, PostData {
   images: ImageInfo | ImageInfo[];
   caption: string;
 }
@@ -531,5 +524,157 @@ export interface Reply extends GenericData {
 }
 
 export interface Comment extends Reply {
-  replyInfo: CountListPair<Reply>;
+  replyInfo: CountListPair<string>;
 }
+
+//---------------------------------------------redux store types-------------------------------------------
+
+export interface PageInfo {
+  pageNo: number;
+  pageLength: number;
+  pageSize: number;
+  noOfPages: number;
+}
+
+export interface PostMetaData {
+  commentInfo: PageInfo;
+  likeInfo: PageInfo;
+  shareInfo: PageInfo;
+  tagInfo: PageInfo;
+  hashTagInfo: PageInfo;
+}
+
+export type PostMetaDataMap = {
+  [key: string]: PostMetaData;
+};
+
+export interface ImagePostEntityMetaDeta {
+  postMetaDataMap: PostMetaDataMap;
+}
+
+export interface CommentMetaData extends ReplyMetaData {
+  replyInfo: PageInfo;
+}
+
+export type CommentMetaDataMap = {
+  [key: string]: CommentMetaData;
+};
+
+export interface CommentEntityMetaData {
+  metaDataMap: CommentMetaDataMap;
+}
+
+export interface ReplyMetaData {
+  likeInfo: PageInfo;
+}
+
+export type ReplyMetaDataMap = {
+  [key: string]: ReplyMetaData;
+};
+
+export interface ReplyEntityMetaData {
+  metaDataMap: ReplyMetaDataMap;
+}
+
+export interface UserMetaData {
+  linkInfo: PageInfo;
+  followerInfo: PageInfo;
+  followingInfo: PageInfo;
+  uploadsInfo: {
+    imagePostInfo: PageInfo;
+  };
+  savesInfo: {
+    imagePostInfo: PageInfo;
+    hashTagInfo: PageInfo;
+  };
+  tagsInfo: {
+    imagePostInfo: PageInfo;
+  };
+}
+
+export type UserMetaDataMap = {
+  [key: string]: UserMetaData;
+};
+
+export interface UserEntityMetaData {
+  metaDataMap: UserMetaDataMap;
+}
+
+export interface AppData {
+  screenInfo: {
+    imageFeed: {
+      ids?: string[];
+      error?: AppError;
+      pageInfo?: PageInfo;
+      state: TaskState;
+    };
+  };
+}
+
+//----------------------------------------------------api-types----------------------------------------------
+
+//a utility type to represent user data
+export interface UserInfoResponse {
+  id: string;
+  socialId: string;
+  username: string;
+  profilePictureUrl: string;
+  isFollower: boolean;
+  isFollowing: boolean;
+}
+
+export interface GenericResponseData {
+  id: string;
+  timestamp: number;
+  author: UserInfoResponse;
+}
+
+export interface PostResponseData {
+  likeInfo: {
+    noOfLikes: number;
+    isLiked: boolean;
+    filteredUsers?: UserInfoResponse[];
+  };
+  commentInfo: {
+    noOfComments: number;
+    filteredUsers?: UserInfoResponse[];
+  };
+  shareInfo: {
+    noOfShares: number;
+    filteredUsers?: UserInfoResponse[];
+  };
+  tagInfo: {
+    noOfTags: number;
+    pageInfo: PageInfoResponse<UserInfoResponse>;
+  };
+  hashTagInfo: {
+    noOfHashTags: number;
+    pageInfo: PageInfoResponse<string>;
+  };
+}
+
+export interface ImagePostResponse
+  extends GenericResponseData,
+    PostResponseData {
+  images: ImageInfo | ImageInfo[];
+  caption?: string;
+}
+
+export type ImageFeedRequestConfig = {
+  /** return type for `thunkApi.getState` */
+  state: RootState;
+  /** type for `thunkApi.dispatch` */
+  dispatch: AppDispatch;
+  /** type of the `extra` argument for the thunk middleware, which will be passed in as `thunkApi.extra` */
+  extra: unknown;
+  /** type to be passed into `rejectWithValue`'s first argument that will end up on `rejectedAction.payload` */
+  rejectValue: AppError;
+  /** return type of the `serializeError` option callback */
+  serializedErrorType: unknown;
+  /** type to be returned from the `getPendingMeta` option callback & merged into `pendingAction.meta` */
+  pendingMeta: unknown;
+  /** type to be passed into the second argument of `fulfillWithValue` to finally be merged into `fulfilledAction.meta` */
+  fulfilledMeta: unknown;
+  /** type to be passed into the second argument of `rejectWithValue` to finally be merged into `rejectedAction.meta` */
+  rejectedMeta: any;
+};
