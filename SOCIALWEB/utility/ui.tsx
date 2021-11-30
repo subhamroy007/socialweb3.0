@@ -90,26 +90,26 @@ export const ConfiguredFlatList = ({
 };
 
 const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    width: "100%",
-  },
-  listContentContainer: {
-    padding: SIZE_REF_8,
-  },
-  boldText: {
-    fontFamily: "roboto-bold",
-  },
-  mediumText: {
-    fontFamily: "roboto-medium",
-  },
-  lightText: {
-    fontFamily: "roboto-light",
-  },
-  thinText: {
-    fontFamily: "roboto-thin",
-  },
-  regularText: {
-    fontFamily: "roboto-regular",
-  },
+    list: {
+        flex: 1,
+        width: "100%",
+    },
+    listContentContainer: {
+        padding: SIZE_REF_8,
+    },
+    boldText: {
+        fontFamily: "roboto-bold",
+    },
+    mediumText: {
+        fontFamily: "roboto-medium",
+    },
+    lightText: {
+        fontFamily: "roboto-light",
+    },
+    thinText: {
+        fontFamily: "roboto-thin",
+    },
+    regularText: {
+        fontFamily: "roboto-regular",
+    },
 });
