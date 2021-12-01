@@ -1,5 +1,5 @@
-import { serveImageFeed } from "../server/routes/imagePost";
-import { AppError } from "./types2";
+import { generateImageFeedResponse } from "./helpers";
+import { AppError, ImagePostResponse, PageInfoWithData } from "./types2";
 
 export const getImageFeed = async (
   pageId: number,
@@ -22,9 +22,7 @@ export const getImageFeed = async (
     );
 
     const responseBody = (await response.json()) as ImageFeedResponse;*/
-
-    const responseBody = serveImageFeed(pageId, userId);
-
+    const responseBody = generateImageFeedResponse(pageId);
     return responseBody;
   } catch (e: any) {
     console.log("error happend while fetching image feed response");

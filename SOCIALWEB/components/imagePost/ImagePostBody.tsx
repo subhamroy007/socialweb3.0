@@ -84,24 +84,9 @@ const ImagePostBody = ({ id }: ImagePostBodyProps) => {
         maxDurationMs={600}
         maxDelayMs={600}
         numberOfTaps={1}
-        maxDeltaX={width}
-        maxDeltaY={height}
         shouldCancelWhenOutside={true}
         onHandlerStateChange={singleTapHandler}
-      >
-        <SafeAreaView edges={[]}>
-          <FastImage
-            source={imageSource}
-            resizeMode={resizeMode}
-            style={[imageResolution]}
-          />
-          <ImageFeedPostOverlay
-            height={scaledHeight}
-            width={WINDOW_WIDTH}
-            isVisible={isOverlayVisible}
-          />
-        </SafeAreaView>
-      </TapGestureHandler>
+      ></TapGestureHandler>
     </View>
   );
 };

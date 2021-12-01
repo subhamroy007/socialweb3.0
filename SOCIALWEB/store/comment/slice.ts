@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { Comment, CommentEntityMetaData, PageInfo } from "../../utility/types";
+import { Comment, CommentStoreMetaData } from "../../utility/types2";
 import { RootState } from "../appStore";
 
 const commentEntity = createEntityAdapter<Comment>({
@@ -8,7 +8,7 @@ const commentEntity = createEntityAdapter<Comment>({
 });
 
 const commentSlice = createSlice({
-  initialState: commentEntity.getInitialState<CommentEntityMetaData>({
+  initialState: commentEntity.getInitialState<CommentStoreMetaData>({
     metaDataMap: {},
   }),
   name: "comment",

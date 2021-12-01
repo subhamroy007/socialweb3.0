@@ -1,6 +1,5 @@
 import React from "react";
 import ImageFeedPostControls from "./ImageFeedPostControls";
-import ImageFeedSinglePost from "./ImagePostBody";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import CollapsibleText from "../global/CollapsibleText";
 import HashTag from "../global/HashTag";

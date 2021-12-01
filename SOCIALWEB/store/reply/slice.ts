@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { Reply, ReplyEntityMetaData } from "../../utility/types";
+import { Reply, ReplyStoreMetaData } from "../../utility/types2";
 import { RootState } from "../appStore";
 
 const replyEntity = createEntityAdapter<Reply>({
@@ -8,7 +8,7 @@ const replyEntity = createEntityAdapter<Reply>({
 });
 
 const replySlice = createSlice({
-  initialState: replyEntity.getInitialState<ReplyEntityMetaData>({
+  initialState: replyEntity.getInitialState<ReplyStoreMetaData>({
     metaDataMap: {},
   }),
   name: "reply",

@@ -1,68 +1,8 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import {
-  ImagePost,
-  ImagePostResponse,
-  ImagePostStoreMetaData,
-  PostInfo,
-  PostResponseInfo,
-} from "../../utility/types2";
+import { imagePostResponseToImagePostConverter } from "../../utility/helpers";
+import { ImagePost, ImagePostStoreMetaData } from "../../utility/types2";
 import { getImageFeedThunk } from "../appData/reducer";
 import { RootState } from "../appStore";
-
-function extractId<T extends { id: string }>(entity: T): string {
-  return entity.id;
-}
-
-const postResponseInfoToPostInfo = ({
-  commentInfo,
-  hashTagInfo,
-  likeInfo,
-  shareInfo,
-  tagInfo,
-}: PostResponseInfo): PostInfo => {
-  return {
-    commentInfo: {
-      filteredUsers: commentInfo.filteredUsers.map(extractId),
-      noOfComments: commentInfo.noOfComments,
-    },
-    hashTagInfo: {
-      count: hashTagInfo.noOfHashTags,
-      list: hashTagInfo.pageInfo.list.map(extractId),
-    },
-    likeInfo: {
-      filteredUsers: likeInfo.filteredUsers.map(extractId),
-      isLiked: likeInfo.isLiked,
-      noOfLikes: likeInfo.noOfLikes,
-    },
-    shareInfo: {
-      filteredUsers: shareInfo.filteredUsers.map(extractId),
-      noOfShares: shareInfo.noOfShares,
-    },
-    tagInfo: {
-      count: tagInfo.noOfTags,
-      list: tagInfo.pageInfo.list.map(extractId),
-    },
-  };
-};
-
-const imagePostResponseToImagePostConverter = (
-  imagePostResponse: ImagePostResponse
-): ImagePost => {
-  return {
-    author: imagePostResponse.author.id,
-    id: imagePostResponse.id,
-    images: imagePostResponse.images,
-    caption: imagePostResponse.caption,
-    timestamp: imagePostResponse.timestamp,
-    ...postResponseInfoToPostInfo({
-      commentInfo: imagePostResponse.commentInfo,
-      hashTagInfo: imagePostResponse.hashTagInfo,
-      likeInfo: imagePostResponse.likeInfo,
-      shareInfo: imagePostResponse.shareInfo,
-      tagInfo: imagePostResponse.tagInfo,
-    }),
-  };
-};
 
 const imagePostEntity = createEntityAdapter<ImagePost>({
   selectId: (imagePost) => imagePost.id,

@@ -108,8 +108,6 @@ export const UserInfo = ({ id, style, size }: InfoWrapperProps) => {
 };
 
 export const PostHeaderInfo = ({ id, style, size }: InfoWrapperProps) => {
-  const dispatch = useAppDispatch();
-
   const socialIdSelectorCallback = useCallback(
     (state: RootState) => selectAuthorSocialId(state, id),
     [id]

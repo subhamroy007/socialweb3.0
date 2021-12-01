@@ -9,7 +9,6 @@ import { selectImageFeedIds, selectState } from "../store/appData/selector";
 import { useAppDispatch, useAppSelector } from "../store/appStore";
 import { SHUTTER_HEIGHT } from "../utility/constants";
 import { globalColors, globalLayouts } from "../utility/styles";
-import { ImageFeedRequest } from "../utility/types";
 import { ConfiguredFlatList } from "../utility/ui";
 
 const NewImageFeedScreen = () => {
@@ -21,11 +20,7 @@ const NewImageFeedScreen = () => {
 
   useEffect(() => {
     const prepare = async () => {
-      const imageFeedRequest: ImageFeedRequest = {
-        includeImage: true,
-        includeStory: true,
-      };
-      dispatch(getImageFeedThunk(imageFeedRequest));
+      dispatch(getImageFeedThunk());
     };
     prepare();
   }, [dispatch]);
