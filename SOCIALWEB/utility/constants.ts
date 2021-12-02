@@ -69,3 +69,8 @@ export const OVERLAY_SCREEN_IMAGE_MIN_WIDTH =
 export const OVERLAY_SCREEN_IMAGE_MAX_HEIGHT = (360 / 533) * WINDOW_HEIGHT;
 export const OVERLAY_SCREEN_IMAGE_MIN_HEIGHT =
   OVERLAY_SCREEN_IMAGE_MAX_HEIGHT * 0.5;
+
+  //----------------------------------------Generator Constants-----------------------------------------
+
+  export const USER_INFO_WITH_TIMESTAMP_PAGE_SIZE = 15;
+  export const IMAGE_POST_RESPONSE_PAGE_SIZE = 15;
