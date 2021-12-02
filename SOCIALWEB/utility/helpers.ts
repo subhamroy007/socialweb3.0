@@ -339,16 +339,77 @@ export function generateImageFeedResponse(
     } as PageInfoWithData<ImagePostResponse>;
 }
 
-export function generateCommentResponse(
-    pageId: number
-): PageInfoWithData<CommentResponse> {
-    return {} as PageInfoWithData<CommentResponse>;
+// export function generateCommentResponse(
+//     pageId: number
+// ): PageInfoWithData<CommentResponse> {
+//     return {} as PageInfoWithData<CommentResponse>;
+// }
+
+// export function generateReplyResponse(
+//     pageId: number
+// ): PageInfoWithData<ReplyResponse> {
+//     return {} as PageInfoWithData<ReplyResponse>;
+// }
+export function generateReplyResponse(pageId: number): PageInfoWithData<ReplyResponse> {
+      let pageNo:number =pageId;
+      const pageSize: number = IMAGE_POST_RESPONSE_PAGE_SIZE;
+    //did not get any comment page size 
+      const noOfPages: number = 9999999;
+      let list:ReplyResponse[]=[];
+
+    for (let i=0;i< pageSize;i++){
+       if(pageNo<=noOfPages){
+            const reply:ReplyResponse ={
+            id:"ReplyId_" + faker.datatype.uuid(),
+            content:faker.lorem.sentences(),
+            author:generateCountListPairForUserInfo().list,
+            timestamp:faker.date.recent(),
+            likeInfo:{
+                noOfLikes:faker.datatype.number(),
+                list:generateUserInfoWithTimestamp().list,
+                isLiked:faker.datatype.boolean(),
+                },
+
+            }
+            list.push(reply)            
+
+       }
+       else break;
+               
+}
+const pageLength:number =list.length;
+        
+    return {
+        pageNo,pageLength,pageSize,noOfPages,list,
+    } as PageInfoWithData<ReplyResponse>;
 }
 
-export function generateReplyResponse(
-    pageId: number
-): PageInfoWithData<ReplyResponse> {
-    return {} as PageInfoWithData<ReplyResponse>;
+
+export function generateCommentResponse(pageId: number): PageInfoWithData<CommentResponse> {
+    let pageNo :number =pageId;
+    const pageSize:Number = IMAGE_POST_RESPONSE_PAGE_SIZE;
+    const noOfPages:number =9999999;
+    let list:CommentResponse[]=[];
+
+    for(let i=0;i<pageSize;i++){
+        if(pageNo<=noOfPages){
+
+        const comments:CommentResponse ={
+            replyInfo:{
+                noOfReply:generateCountListUserInfo().count,
+                pageInfo:{
+                    comment:generateReplyResponse().list,
+                }
+            }
+        }
+        list.push(comments);
+    }else break;
+  }
+const pageLength:number =list.length;
+
+    return {
+        pageNo,pageLength,pageSize,noOfPages,list   
+    } as PageInfoWithData<CommentResponse>;
 }
 
 export function generateUserInfoWithTimestamp(
