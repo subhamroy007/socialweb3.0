@@ -1,12 +1,44 @@
-import React from "react";
-import { ListRenderItemInfo, StyleSheet, View } from "react-native";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import {
+  CompositeScreenProps,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/core";
+import { StackScreenProps } from "@react-navigation/stack";
+import React, { useCallback, useState } from "react";
+import { ListRenderItemInfo, Pressable, StyleSheet, View } from "react-native";
 import FastImage, { Source } from "react-native-fast-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WINDOW_WIDTH } from "../utility/constants";
 import { globalColors, globalLayouts } from "../utility/styles";
+import {
+  RootStackNavigatorParamList,
+  RootTabNavigatorParamList,
+} from "../utility/types";
 import { ConfiguredFlatList } from "../utility/ui";
 
+export type ImageGalleryProps = CompositeScreenProps<
+  BottomTabScreenProps<RootTabNavigatorParamList, "ProfileScreen">,
+  StackScreenProps<RootStackNavigatorParamList>
+>;
+
+export type ImageGalleryNavigationProps = ImageGalleryProps["navigation"];
+export type ImageGalleryRouteProps = ImageGalleryProps["route"];
+
 export const ImageGalleryItem = ({ index }: { index: number }) => {
+  const navigation = useNavigation<ImageGalleryNavigationProps>();
+  const route = useRoute<ImageGalleryRouteProps>();
+
+  const pressInCallback = useCallback(() => {
+    navigation.push("OverlayScreen");
+  }, [navigation]);
+
+  // const pressOutCallback = useCallback(() => {
+  //   if (!navigation.isFocused()) {
+  //     navigation.pop(1);
+  //   }
+  // }, []);
+
   const width = Math.floor(Math.random() * 300 + 200);
   const height = Math.floor(Math.random() * 300 + 200);
 
@@ -17,16 +49,20 @@ export const ImageGalleryItem = ({ index }: { index: number }) => {
   };
 
   return (
-    <View style={styles.gelleryCell}>
-      <FastImage
-        source={imageSource}
-        style={[
-          styles.galleryItem,
-          index % 3 === 2 ? styles.galleryRightEdgeItem : undefined,
-        ]}
-        resizeMode="cover"
-      />
-    </View>
+    <>
+      <Pressable onLongPress={pressInCallback}>
+        <View style={styles.gelleryCell}>
+          <FastImage
+            source={imageSource}
+            style={[
+              styles.galleryItem,
+              index % 3 === 2 ? styles.galleryRightEdgeItem : undefined,
+            ]}
+            resizeMode="cover"
+          />
+        </View>
+      </Pressable>
+    </>
   );
 };
 

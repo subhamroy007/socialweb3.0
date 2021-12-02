@@ -13,10 +13,12 @@
     "@react-navigation/stack": "^6.0.11",
     "@reduxjs/toolkit": "^1.6.2",
     "expo": "~43.0.2",
+    "expo-blur": "~10.0.3",
     "expo-dev-client": "^0.6.3",
     "expo-splash-screen": "~0.13.5",
     "expo-status-bar": "~1.1.0",
     "expo-updates": "~0.10.13",
+    "faker": "^5.5.3",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
@@ -28,13 +30,13 @@
     "react-native-screens": "~3.8.0",
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "0.17.1",
-    "react-redux": "^7.2.6",
-    "expo-blur": "~10.0.3"
+    "react-redux": "^7.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
+    "miragejs": "^0.1.42",
     "typescript": "~4.3.5"
   },
   "private": true,

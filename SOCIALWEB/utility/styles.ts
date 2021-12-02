@@ -7,6 +7,13 @@ import {
 } from "./constants";
 
 export const globalColors = StyleSheet.create({
+  defaultViewColor: {
+    borderTopColor: "#D1CBCB",
+    backgroundColor: "#FDFDFD",
+  },
+  defaultTextColor: {
+    color: "#1D1B1B",
+  },
   screenColor: {
     backgroundColor: "#FDFDFD",
   },
@@ -33,18 +40,6 @@ export const globalColors = StyleSheet.create({
   },
   avatarContainerColor: {
     borderColor: "#D1CBCB",
-  },
-  userInfoContainerColor: {
-    backgroundColor: "#FDFDFD",
-  },
-  userInfoPrimaryTextColor: {
-    color: "#1D1B1B",
-  },
-  userInfoSecondaryTextColor: {
-    color: "#1D1B1B",
-  },
-  imageFeedPostHeaderContainerColor: {
-    backgroundColor: "#FDFDFD",
   },
   headerColor: {
     backgroundColor: "#FDFDFD",

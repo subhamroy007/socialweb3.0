@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import {
   ImageFeedScreenHeader,
+  NotificationScreenHeader,
   ProfileScreenHeader,
   SavedScreenHeader,
   SettingsScreenHeader,
@@ -50,7 +51,7 @@ const RootTabNavigator = () => {
       <TabNavigator.Screen
         name="NotificationScreen"
         component={NotificationScreen}
-        options={{ header: (props) => <TrendingScreenHeader {...props} /> }}
+        options={{ header: (props) => <NotificationScreenHeader {...props} /> }}
       />
       <TabNavigator.Screen
         name="SavedDataScreen"
