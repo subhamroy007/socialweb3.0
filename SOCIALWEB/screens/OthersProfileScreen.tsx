@@ -12,7 +12,7 @@ import {
   MetaIconWrapper,
   RootWrapper,
 } from "../components/profile/wrapper";
-import HighlightedContentList from "../components/global/HighlightedContentList";
+import HighlightedContentList from "../components/global/HashTagList";
 import SwippableTabNavigator, {
   CustomMaterialScreen,
 } from "../components/global/CustomMaterialNavigator";

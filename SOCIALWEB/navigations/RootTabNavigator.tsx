@@ -27,6 +27,7 @@ const RootTabNavigator = () => {
     <TabNavigator.Navigator
       backBehavior="history"
       tabBar={(props) => <AdvancedShutter {...props} />}
+      initialRouteName="VideoFeedScreen"
     >
       <TabNavigator.Screen
         name="ImageFeedScreen"

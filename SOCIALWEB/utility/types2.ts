@@ -1,6 +1,7 @@
 //----------------------------------------common-types-----------------------------------------------------
 
 import { StyleProp, ViewStyle } from "react-native";
+import { ImageStyle, ResizeMode, Source } from "react-native-fast-image";
 import { AppDispatch, RootState } from "../store/appStore";
 
 export interface GeneralInfo extends IdTimeStampPair {
@@ -80,6 +81,18 @@ export interface UserChatContactProps {
   text: string;
   unreadCount: number;
   style?: StyleProp<ViewStyle>;
+}
+
+export interface Size {
+  original: number;
+  max: number;
+  min: number;
+}
+
+export interface ImageConfig {
+  source: Source;
+  style: StyleProp<ImageStyle>;
+  resizeMode: ResizeMode;
 }
 
 //-----------------------------------api-response-types-----------------------------------------

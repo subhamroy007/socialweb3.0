@@ -219,6 +219,10 @@ export function imagePostResponseToImagePostConverter(
   };
 }
 
+export function createKeyExtractor(type: string) {
+  return (item: string, index?: number) => type + "@" + item;
+}
+
 //<----------------------------------------dummy-data-generator-functions---------------------------------------->
 
 export function generateImageFeedResponse(

@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Animated, Easing, StyleSheet, View } from "react-native";
+import {
+  Animated,
+  Easing,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ImagePostMetaText from "./ImagePostMetaText";
@@ -8,14 +15,12 @@ import { SIZE_REF_12, SIZE_REF_16, SIZE_REF_8 } from "../../utility/constants";
 import { AnimatedSafeAreaView } from "../../utility/ui";
 
 export interface ImageFeedPostOverlayProps {
-  width: number;
-  height: number;
   isVisible: boolean;
+  style?: StyleProp<ViewStyle>;
 }
 
 const ImageFeedPostOverlay = ({
-  height,
-  width,
+  style,
   isVisible,
 }: ImageFeedPostOverlayProps) => {
   //reference that controls the opacity of the overlay in animation effect
@@ -46,17 +51,9 @@ const ImageFeedPostOverlay = ({
     };
   }, [animatedData, isVisible]);
 
-  const dynamicOpacityStyle = useMemo(
-    () => ({
-      opacity: animatedData,
-    }),
-    [animatedData]
-  );
-
-  const dynamicContainerStyle = useMemo(
-    () => ({ width, height, zIndex }),
-    [width, height, zIndex]
-  );
+  const overlayStyleList = useMemo(() => {
+    return [{ opacity: animatedData, zIndex }, style, styles.overlay];
+  }, [style, zIndex, animatedData]);
 
   const iconList = useMemo(
     () => [
@@ -68,10 +65,7 @@ const ImageFeedPostOverlay = ({
   );
 
   return (
-    <AnimatedSafeAreaView
-      edges={[]}
-      style={[dynamicContainerStyle, dynamicOpacityStyle, styles.overlay]}
-    >
+    <Animated.View style={overlayStyleList}>
       <ScrollView
         style={styles.overlayScroll}
         showsHorizontalScrollIndicator={false}
@@ -79,10 +73,7 @@ const ImageFeedPostOverlay = ({
         pagingEnabled={true}
         horizontal={true}
       >
-        <SafeAreaView
-          edges={[]}
-          style={[styles.metaDataSecion, dynamicContainerStyle]}
-        >
+        <View style={[styles.metaDataSecion, style]}>
           <View style={styles.metaDataWrapper}>
             <ImagePostMetaText
               filteredReference={["you", "akshay_kumar2.0"]}
@@ -100,12 +91,12 @@ const ImageFeedPostOverlay = ({
 
             <ImagePostMetaText numberOfData={254} icon={iconList[2]} />
           </View>
-        </SafeAreaView>
+        </View>
 
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.tagListSection}
-          style={dynamicContainerStyle}
+          style={style}
         >
           <Tag id="ananyapanda" style={styles.tagListItem} />
           <Tag id="aliya2.0" style={styles.tagListItem} />
@@ -125,7 +116,7 @@ const ImageFeedPostOverlay = ({
           <Tag id="kushalroy" style={styles.tagListItem} />
         </ScrollView>
       </ScrollView>
-    </AnimatedSafeAreaView>
+    </Animated.View>
   );
 };
 

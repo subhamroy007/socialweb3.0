@@ -78,14 +78,8 @@ export const ImageGalleryCard = () => {
 
     if (scaledWidth <= OVERLAY_SCREEN_IMAGE_MIN_WIDTH) {
       scaledWidth = OVERLAY_SCREEN_IMAGE_MIN_WIDTH;
-      // if (scaledHeight === OVERLAY_SCREEN_IMAGE_MAX_HEIGHT) {
-      //   imageResizeMode = "center";
-      // }
     } else if (scaledWidth >= OVERLAY_SCREEN_IMAGE_MAX_WIDTH) {
       scaledWidth = OVERLAY_SCREEN_IMAGE_MAX_WIDTH;
-      // if (scaledHeight !== OVERLAY_SCREEN_IMAGE_MAX_HEIGHT) {
-      //   imageResizeMode = "center";
-      // }
     }
 
     imageStyle = {

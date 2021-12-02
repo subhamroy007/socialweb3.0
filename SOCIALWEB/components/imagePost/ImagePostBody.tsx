@@ -1,25 +1,33 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { StyleProp, StyleSheet, View } from "react-native";
-import FastImage, {
-  ImageStyle,
-  ResizeMode,
-  Source,
-} from "react-native-fast-image";
+import {
+  ListRenderItemInfo,
+  StyleSheet,
+  View,
+  ViewabilityConfig,
+  ViewToken,
+} from "react-native";
+import FastImage from "react-native-fast-image";
 import {
   HandlerStateChangeEvent,
   State,
   TapGestureHandler,
   TapGestureHandlerEventPayload,
 } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
+import useImageResize from "../../hooks/useImageResize";
 import { RootState, useAppSelector } from "../../store/appStore";
 import { selectImageList } from "../../store/imagePost/selector";
-import {
-  IMAGE_POST_MAX_HEIGHT,
-  IMAGE_POST_MIN_HEIGHT,
-  WINDOW_WIDTH,
-} from "../../utility/constants";
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from "../../utility/constants";
+import { ImageConfig } from "../../utility/types2";
+import { ConfiguredFlatList } from "../../utility/ui";
 import ImageFeedPostOverlay from "./ImageFeedPostOverlay";
+
+const renderItem = (item: ListRenderItemInfo<ImageConfig>) => (
+  <FastImage
+    source={item.item.source}
+    style={item.item.style}
+    resizeMode={item.item.resizeMode}
+  />
+);
 
 export interface ImagePostBodyProps {
   id: string;
@@ -28,42 +36,39 @@ export interface ImagePostBodyProps {
 const ImagePostBody = ({ id }: ImagePostBodyProps) => {
   const [isOverlayVisible, setOverlayVisible] = useState<boolean>(false);
 
-  const imageListSelectorCallback = useCallback(
-    (state: RootState) => selectImageList(state, id),
-    [id]
-  );
+  const [imageIndex, setImageIndex] = useState<number>(0);
 
-  const imageList = useAppSelector(imageListSelectorCallback);
-
-  const imageSourceList: Source[] | undefined = useMemo(
-    () =>
-      imageList?.map<Source>((item) => ({
-        cache: "immutable",
-        priority: "high",
-        uri: item.url,
-      })),
-    [imageList]
-  );
-
-  const { resizeMode, scaledHeight } = useMemo(() => {
-    const calculatedHeight = (height * WINDOW_WIDTH) / width;
-    const scaledHeight = Math.max(
-      Math.min(calculatedHeight, IMAGE_POST_MAX_HEIGHT),
-      IMAGE_POST_MIN_HEIGHT
+  const imageConfigList = useMemo<ImageConfig[]>(() => {
+    const imageListSelectorCallback = useCallback(
+      (state: RootState) => selectImageList(state, id)!,
+      [id]
     );
 
-    let resizeMode: ResizeMode = "center";
+    const imageList = useAppSelector(imageListSelectorCallback);
 
-    if (calculatedHeight > scaledHeight) {
-      resizeMode = "cover";
-    }
+    return imageList.map<ImageConfig>((imageInfo) => {
+      const { width, height, resizeMode } = useImageResize(
+        { original: imageInfo.width, max: WINDOW_WIDTH, min: WINDOW_WIDTH },
+        {
+          original: imageInfo.height,
+          max: WINDOW_WIDTH * 0.66,
+          min: WINDOW_HEIGHT * 0.3,
+        }
+      );
+      return {
+        resizeMode,
+        style: { width, height },
+        source: { cache: "immutable", priority: "high", uri: imageInfo.url },
+      };
+    });
+  }, [id]);
 
-    return { scaledHeight, resizeMode };
-  }, [width, height]);
-
-  const imageResolution: StyleProp<ImageStyle> = useMemo(
-    () => ({ width: WINDOW_WIDTH, height: scaledHeight }),
-    [scaledHeight]
+  const viewabilityConfig: ViewabilityConfig = useMemo(
+    () => ({
+      viewAreaCoveragePercentThreshold: 100,
+      minimumViewTime: 1,
+    }),
+    []
   );
 
   const singleTapHandler = useCallback(
@@ -77,8 +82,14 @@ const ImagePostBody = ({ id }: ImagePostBodyProps) => {
     []
   );
 
+  const viewableItemChangedCallback = useCallback<
+    (info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => void
+  >(({ viewableItems }) => {
+    setImageIndex(viewableItems[0].index!);
+  }, []);
+
   return (
-    <View style={[styles.imageFeedSinglePostContainer]}>
+    <View style={[styles.imagePostBody]}>
       <TapGestureHandler
         minPointers={1}
         maxDurationMs={600}
@@ -86,17 +97,34 @@ const ImagePostBody = ({ id }: ImagePostBodyProps) => {
         numberOfTaps={1}
         shouldCancelWhenOutside={true}
         onHandlerStateChange={singleTapHandler}
-      ></TapGestureHandler>
+      >
+        <ConfiguredFlatList
+          contentContainerStyle={styles.listContentContainerStyle}
+          data={imageConfigList}
+          renderItem={renderItem}
+          viewabilityConfig={viewabilityConfig}
+          onViewableItemsChanged={viewableItemChangedCallback}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        />
+        <ImageFeedPostOverlay
+          isVisible={isOverlayVisible}
+          style={imageConfigList[imageIndex].style}
+        />
+      </TapGestureHandler>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  imageFeedSinglePostContainer: {
+  imagePostBody: {
     flexDirection: "column",
     flexWrap: "nowrap",
     alignItems: "center",
     justifyContent: "center",
+  },
+  listContentContainerStyle: {
+    padding: 0,
   },
 });
 

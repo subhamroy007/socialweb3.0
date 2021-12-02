@@ -29,3 +29,18 @@ export const selectImageList = createDraftSafeSelector<
   [typeof selectImagePostById],
   ImageInfo[] | undefined
 >(selectImagePostById, (imagePost) => imagePost?.images);
+
+export const selectIsLiked = createDraftSafeSelector<
+  [typeof selectImagePostById],
+  boolean | undefined
+>(selectImagePostById, (imagePost) => imagePost?.likeInfo.isLiked);
+
+export const selectIsSaved = createDraftSafeSelector<
+  [typeof selectImagePostById],
+  boolean | undefined
+>(selectImagePostById, (imagePost) => imagePost?.isSaved);
+
+export const selectHashTagList = createDraftSafeSelector<
+  [typeof selectImagePostById],
+  string[] | undefined
+>(selectImagePostById, (imagePost) => imagePost?.hashTagInfo.list);

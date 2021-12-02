@@ -3,33 +3,34 @@ import {
   ListRenderItemInfo,
   StyleProp,
   StyleSheet,
+  View,
   ViewStyle,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { SIZE_REF_4 } from "../../utility/constants";
+import { createKeyExtractor } from "../../utility/helpers";
 import { ConfiguredFlatList } from "../../utility/ui";
+import HashTag from "./HashTag";
 import ItemSeparator from "./ItemSeparator";
 
-export interface HighlightedContentListProps {
+export interface HashTagListProps {
   data: string[];
-  renderItem: (item: ListRenderItemInfo<string>) => ReactElement<any>;
-  keyExtractor: (item: string, index?: number) => string;
   style?: StyleProp<ViewStyle>;
 }
 
-const HighlightedContentList = ({
-  data,
-  keyExtractor,
-  renderItem,
-  style,
-}: HighlightedContentListProps) => {
+const renderItem = (item: ListRenderItemInfo<string>) => {
+  return <HashTag id={item.item} />;
+};
+
+const keyExtractor = createKeyExtractor("hashtag");
+
+const HashTagList = ({ data, style }: HashTagListProps) => {
   const itemSeparetorCallback = useCallback(
     () => <ItemSeparator axis="vertical" length={SIZE_REF_4} />,
     []
   );
 
   return (
-    <SafeAreaView edges={[]} style={[styles.container, style]}>
+    <View style={[styles.container, style]}>
       <ConfiguredFlatList
         data={data}
         renderItem={renderItem}
@@ -38,7 +39,7 @@ const HighlightedContentList = ({
         keyExtractor={keyExtractor}
         ItemSeparatorComponent={itemSeparetorCallback}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -54,8 +55,7 @@ const styles = StyleSheet.create({
   listContentContainer: {
     paddingVertical: 0,
     paddingHorizontal: SIZE_REF_4,
-    backgroundColor: "orange",
   },
 });
 
-export default HighlightedContentList;
+export default HashTagList;
