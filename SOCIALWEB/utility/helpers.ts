@@ -350,65 +350,87 @@ export function generateImageFeedResponse(
 // ): PageInfoWithData<ReplyResponse> {
 //     return {} as PageInfoWithData<ReplyResponse>;
 // }
-export function generateReplyResponse(pageId: number): PageInfoWithData<ReplyResponse> {
-      let pageNo:number =pageId;
-      const pageSize: number = IMAGE_POST_RESPONSE_PAGE_SIZE;
-    //did not get any comment page size 
-      const noOfPages: number = 9999999;
-      let list:ReplyResponse[]=[];
+export function generateReplyResponse(
+    pageId: number
+): PageInfoWithData<ReplyResponse> {
+    let pageNo: number = pageId;
+    const pageSize: number = IMAGE_POST_RESPONSE_PAGE_SIZE;
+    const noOfPages: number = 9999999;
+    let list: ReplyResponse[] = [];
 
-    for (let i=0;i< pageSize;i++){
-       if(pageNo<=noOfPages){
-            const reply:ReplyResponse ={
-            id:"ReplyId_" + faker.datatype.uuid(),
-            content:faker.lorem.sentences(),
-            author:generateCountListPairForUserInfo().list,
-            timestamp:faker.date.recent(),
-            likeInfo:{
-                noOfLikes:faker.datatype.number(),
-                list:generateUserInfoWithTimestamp().list,
-                isLiked:faker.datatype.boolean(),
+    for (let i = 0; i < pageSize; i++) {
+        if (pageNo <= noOfPages) {
+            const reply: ReplyResponse = {
+                id: "ReplyId_" + faker.datatype.uuid(),
+                timestamp: faker.time.recent(),
+                author: {
+                    id: "UserId_" + faker.datatype.uuid(),
+                    socialId: "SocialId_" + faker.datatype.uuid(),
+                    username: faker.name.findName(),
+                    profilePictureUrl: faker.image.imageUrl(),
+                    isFollower: faker.datatype.boolean(),
+                    isFollowing: faker.datatype.boolean(),
+                    noOfFollowers: faker.datatype.number(),
                 },
-
-            }
-            list.push(reply)            
-
-       }
-       else break;
-               
-}
-const pageLength:number =list.length;
-        
+                content: faker.lorem.sentences(),
+                likeInfo: {
+                    noOfLikes: faker.datatype.number(),
+                    isLiked: faker.datatype.boolean(),
+                },
+            };
+            list.push(reply);
+        } else break;
+    }
+    const pageLength: number = list.length;
     return {
-        pageNo,pageLength,pageSize,noOfPages,list,
+        pageNo,
+        pageLength,
+        pageSize,
+        noOfPages,
+        list,
     } as PageInfoWithData<ReplyResponse>;
 }
 
+export function generateCommentResponse(
+    pageId: number
+): PageInfoWithData<CommentResponse> {
+    let pageNo: number = pageId;
+    const pageSize: Number = IMAGE_POST_RESPONSE_PAGE_SIZE;
+    const noOfPages: number = 9999999;
+    let list: CommentResponse[] = [];
 
-export function generateCommentResponse(pageId: number): PageInfoWithData<CommentResponse> {
-    let pageNo :number =pageId;
-    const pageSize:Number = IMAGE_POST_RESPONSE_PAGE_SIZE;
-    const noOfPages:number =9999999;
-    let list:CommentResponse[]=[];
-
-    for(let i=0;i<pageSize;i++){
-        if(pageNo<=noOfPages){
-
-        const comments:CommentResponse ={
-            replyInfo:{
-                noOfReply:generateCountListUserInfo().count,
-                pageInfo:{
-                    comment:generateReplyResponse().list,
-                }
-            }
-        }
-        list.push(comments);
-    }else break;
-  }
-const pageLength:number =list.length;
+    for (let i = 0; i < pageSize; i++) {
+        if (pageNo <= noOfPages) {
+            const comments: CommentResponse = {
+                id: "ReplyId_" + faker.datatype.uuid(),
+                timestamp: faker.time.recent(),
+                author: {
+                    id: "UserId_" + faker.datatype.uuid(),
+                    socialId: "SocialId_" + faker.datatype.uuid(),
+                    username: faker.name.findName(),
+                    profilePictureUrl: faker.image.imageUrl(),
+                    isFollower: faker.datatype.boolean(),
+                    isFollowing: faker.datatype.boolean(),
+                    noOfFollowers: faker.datatype.number(),
+                },
+                content: faker.lorem.sentences(),
+                likeInfo: {
+                    noOfLikes: faker.datatype.number(),
+                    isLiked: faker.datatype.boolean(),
+                },
+                noOfReplies: faker.datatype.number(),
+            };
+            list.push(comments);
+        } else break;
+    }
+    const pageLength: number = list.length;
 
     return {
-        pageNo,pageLength,pageSize,noOfPages,list   
+        pageNo,
+        pageLength,
+        pageSize,
+        noOfPages,
+        list,
     } as PageInfoWithData<CommentResponse>;
 }
 
