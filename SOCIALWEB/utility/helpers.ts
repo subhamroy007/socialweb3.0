@@ -173,10 +173,20 @@ export const timeStringGenerator = (timestamp: number): string => {
     const seconds = time.getSeconds();
     let timeString: string = "";
     let secondString = "";
+    let minuteString = "";
     if (seconds < 10) {
         secondString = "0" + seconds;
     }
-    timeString = hours + ":" + minutes + ":" + secondString;
+    if (hours < 0) {
+        timeString = minutes + ":" + secondString;
+    } else {
+        if (minutes < 10) {
+            minuteString = "0" + minutes;
+            timeString = hours + ":" + minuteString + ":" + secondString;
+        } else {
+            timeString = hours + ":" + minutes + ":" + secondString;
+        }
+    }
     return timeString;
 };
 
