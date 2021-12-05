@@ -166,6 +166,20 @@ export const dateString = ({ timestamp }: { timestamp: number }) => {
     return timestring;
 };
 
+export const timeStringGenerator = (timestamp: number): string => {
+    const time = new Date(timestamp);
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+    const seconds = time.getSeconds();
+    let timeString: string = "";
+    let secondString = "";
+    if (seconds < 10) {
+        secondString = "0" + seconds;
+    }
+    timeString = hours + ":" + minutes + ":" + secondString;
+    return timeString;
+};
+
 export function extractId<T extends { id: string }>(entity: T): string {
     return entity.id;
 }
@@ -253,7 +267,7 @@ const generateCountListPairForUserInfo = (): CountListPair<UserInfo> => {
 
 const generateCountListPairForHashTagInfo = (): CountListPair<HashTagInfo> => {
     let list: HashTagInfo[] = [];
-    const count: number = faker.datatype.number(1000);
+    const count: number = faker.datatype.number(20);
     for (let i = 0; i < count; i++) {
         const hashTag: HashTagInfo = {
             id: "HashTagId_" + faker.datatype.uuid(),
@@ -267,13 +281,15 @@ const generateCountListPairForHashTagInfo = (): CountListPair<HashTagInfo> => {
 };
 
 const generateImagesList = (): ImageInfo[] => {
-    const length = faker.datatype.number(10);
+    const length = faker.datatype.number({ min: 1, max: 10 });
     let list: ImageInfo[] = [];
     for (let i = 0; i < length; i++) {
+        const width = faker.datatype.number({ min: 220, max: 1080 });
+        const height = faker.datatype.number({ min: 220, max: 1080 });
         const image: ImageInfo = {
-            url: faker.image.imageUrl(),
-            height: faker.datatype.number(1080),
-            width: faker.datatype.number(1080),
+            url: faker.image.imageUrl(width, height),
+            height: height,
+            width: width,
         };
         list.push(image);
     }
