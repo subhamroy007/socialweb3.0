@@ -177,7 +177,7 @@ export const timeStringGenerator = (timestamp: number): string => {
     if (seconds < 10) {
         secondString = "0" + seconds;
     }
-    if (hours < 0) {
+    if (hours < 1) {
         timeString = minutes + ":" + secondString;
     } else {
         if (minutes < 10) {
