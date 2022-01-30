@@ -2005,19 +2005,127 @@ const VolumeMediumSolid = (props: SvgProps) => (
 
 export { VolumeMediumSolid };
 
-const Icon = ({
-    name,
-    style,
-    size,
-    color,
-}: {
-    name: string;
+export interface IconProps {
+    name: IconType;
     style?: StyleProp<ViewStyle>;
     size?: number;
     color?: string;
-}) => {
+}
+
+export type IconType =
+    | "add-song"
+    | "around-the-clock-bold"
+    | "around-the-clock-regular"
+    | "arrow-down"
+    | "arrow-up"
+    | "arrow-left"
+    | "arrow-right"
+    | "bookmark-outline-bold"
+    | "bookmark-outline-regular"
+    | "bookmark-solid"
+    | "camera-outline-bold"
+    | "camera-outline-regular"
+    | "camera-solid"
+    | "caption-outline-bold"
+    | "caption-outline-regular"
+    | "caption-solid"
+    | "chevron-down"
+    | "chevron-left"
+    | "chevron-right"
+    | "chevron-up"
+    | "comment-outline-bold"
+    | "comment-outline-regular"
+    | "comment-solid"
+    | "edit-outline-regular"
+    | "edit-solid"
+    | "flag-outline"
+    | "flag-solid"
+    | "follow"
+    | "following"
+    | "full-screen"
+    | "gear-outline-bold"
+    | "gear-outline-regular"
+    | "gear-solid"
+    | "group-outline-regular"
+    | "group-outline-bold"
+    | "group-solid"
+    | "hashtag-outline-bold"
+    | "hashtag-outline-regular"
+    | "hashtag-solid"
+    | "heart-outline-regular"
+    | "heart-outline-bold"
+    | "heart-solid"
+    | "hide"
+    | "history-regular"
+    | "history-bold"
+    | "image-nav-bold"
+    | "image-nav-regular"
+    | "live-outline-regular"
+    | "live-outline-bold"
+    | "live-solid"
+    | "loading"
+    | "magnify-bold"
+    | "magnify-regular"
+    | "message-outline-bold"
+    | "message-outline-regular"
+    | "message-solid"
+    | "minimize"
+    | "more-outline"
+    | "more-solid"
+    | "mute-outline-bold"
+    | "mute-outline-regular"
+    | "mute-solid"
+    | "next"
+    | "notification-outline-regular"
+    | "notification-outline-bold"
+    | "notification-solid"
+    | "paperclip-bold"
+    | "paperclip-regular"
+    | "pause"
+    | "phone-outline-bold"
+    | "phone-outline-regular"
+    | "phone-solid"
+    | "play"
+    | "playback-forward"
+    | "playback-backward"
+    | "playlist-add"
+    | "playlist-check"
+    | "plus-outline-bold"
+    | "plus-outline-regular"
+    | "previous"
+    | "remove-song"
+    | "retry"
+    | "send-outline-bold"
+    | "send-outline-regular"
+    | "send-solid"
+    | "share-outline-bold"
+    | "share-outline-regular"
+    | "share-solid"
+    | "show"
+    | "tag-outline-bold"
+    | "tag-outline-regular"
+    | "trending-outline-bold"
+    | "trending-outline-regular"
+    | "trending-solid"
+    | "user-outline-bold"
+    | "user-outline-regular"
+    | "trending-solid"
+    | "user-outline-bold"
+    | "user-outline-regular"
+    | "user-solid"
+    | "video-outline-bold"
+    | "video-outline-regular"
+    | "video-solid"
+    | "volume-high-outline"
+    | "volume-high-solid"
+    | "volume-medium-outline"
+    | "volume-medium-solid"
+    | "volume-low-outline"
+    | "volume-low-solid";
+
+const Icon = ({ name, style, size, color }: IconProps) => {
     switch (name) {
-        case "AddSong":
+        case "add-song":
             return (
                 <View style={style}>
                     <AddSong
@@ -2029,7 +2137,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "AroundTheClockBold":
+        case "around-the-clock-bold":
             return (
                 <View style={style}>
                     <AroundTheClockBold
@@ -2041,7 +2149,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "AroundTheClockRegular":
+        case "around-the-clock-regular":
             return (
                 <View style={style}>
                     <AroundTheClockRegular
@@ -2053,7 +2161,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ArrowDown":
+        case "arrow-down":
             return (
                 <View style={style}>
                     <ArrowDown
@@ -2065,7 +2173,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ArrowUp":
+        case "arrow-up":
             return (
                 <View style={style}>
                     <ArrowUp
@@ -2077,7 +2185,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ArrowLeft":
+        case "arrow-left":
             return (
                 <View style={style}>
                     <ArrowLeft
@@ -2089,7 +2197,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ArrowRight":
+        case "arrow-right":
             return (
                 <View style={style}>
                     <ArrowRight
@@ -2101,7 +2209,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "BookmarkOutlineRegular":
+        case "bookmark-outline-regular":
             return (
                 <View style={style}>
                     <BookmarkOutlineRegular
@@ -2113,7 +2221,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "BookmarkOutlineBold":
+        case "bookmark-outline-bold":
             return (
                 <View style={style}>
                     <BookmarkOutlineBold
@@ -2125,7 +2233,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "BookmarkSolid":
+        case "bookmark-solid":
             return (
                 <View style={style}>
                     <BookmarkSolid
@@ -2137,7 +2245,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CameraOutlineBold":
+        case "camera-outline-bold":
             return (
                 <View style={style}>
                     <CameraOutlineBold
@@ -2149,7 +2257,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CameraOutlineRegular":
+        case "camera-outline-regular":
             return (
                 <View style={style}>
                     <CameraOutlineRegular
@@ -2161,7 +2269,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CameraSolid":
+        case "camera-solid":
             return (
                 <View style={style}>
                     <CameraSolid
@@ -2173,7 +2281,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CaptionOutlineBold":
+        case "caption-outline-bold":
             return (
                 <View style={style}>
                     <CaptionOutlineBold
@@ -2185,7 +2293,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CaptionOutlineRegular":
+        case "caption-outline-regular":
             return (
                 <View style={style}>
                     <CaptionOutlineRegular
@@ -2197,7 +2305,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CaptionSolid":
+        case "caption-solid":
             return (
                 <View style={style}>
                     <CaptionSolid
@@ -2209,7 +2317,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ChevronDown":
+        case "chevron-down":
             return (
                 <View style={style}>
                     <ChevronDown
@@ -2221,7 +2329,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ChevronLeft":
+        case "chevron-left":
             return (
                 <View style={style}>
                     <ChevronLeft
@@ -2233,7 +2341,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ChevronRight":
+        case "chevron-right":
             return (
                 <View style={style}>
                     <ChevronRight
@@ -2245,7 +2353,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ChevronUp":
+        case "chevron-up":
             return (
                 <View style={style}>
                     <ChevronUp
@@ -2257,7 +2365,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CommentOutlineBold":
+        case "comment-outline-bold":
             return (
                 <View style={style}>
                     <CommentOutlineBold
@@ -2269,7 +2377,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CommentOutlineRegular":
+        case "comment-outline-regular":
             return (
                 <View style={style}>
                     <CommentOutlineRegular
@@ -2281,7 +2389,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CommentSolid":
+        case "comment-solid":
             return (
                 <View style={style}>
                     <CommentSolid
@@ -2293,7 +2401,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "EditOutlineRegular":
+        case "edit-outline-regular":
             return (
                 <View style={style}>
                     <EditOutlineRegular
@@ -2305,7 +2413,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "EditSolid":
+        case "edit-solid":
             return (
                 <View style={style}>
                     <EditSolid
@@ -2317,7 +2425,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "FlagOutline":
+        case "flag-outline":
             return (
                 <View style={style}>
                     <FlagOutline
@@ -2329,7 +2437,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "FlagSolid":
+        case "flag-solid":
             return (
                 <View style={style}>
                     <FlagSolid
@@ -2341,7 +2449,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Follow":
+        case "follow":
             return (
                 <View style={style}>
                     <Follow
@@ -2353,7 +2461,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Following":
+        case "following":
             return (
                 <View style={style}>
                     <Following
@@ -2365,7 +2473,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "FullScreen":
+        case "full-screen":
             return (
                 <View style={style}>
                     <FullScreen
@@ -2377,7 +2485,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "GearOutlineBold":
+        case "gear-outline-bold":
             return (
                 <View style={style}>
                     <GearOutlineBold
@@ -2389,7 +2497,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "GearOutlineRegular":
+        case "gear-outline-regular":
             return (
                 <View style={style}>
                     <GearOutlineRegular
@@ -2401,7 +2509,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "GearSolid":
+        case "gear-solid":
             return (
                 <View style={style}>
                     <GearSolid
@@ -2413,7 +2521,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "GroupOutlineBold":
+        case "group-outline-bold":
             return (
                 <View style={style}>
                     <GroupOutlineBold
@@ -2425,7 +2533,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "GearOutlineRegular":
+        case "group-outline-regular":
             return (
                 <View style={style}>
                     <GearOutlineRegular
@@ -2437,10 +2545,10 @@ const Icon = ({
                     />
                 </View>
             );
-        case "GearSolid":
+        case "group-solid":
             return (
                 <View style={style}>
-                    <GearSolid
+                    <GroupSolid
                         width={size}
                         height={size}
                         preserveAspectRatio="true"
@@ -2449,7 +2557,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "HashtagOutlineBold":
+        case "hashtag-outline-bold":
             return (
                 <View style={style}>
                     <HashtagOutlineBold
@@ -2461,7 +2569,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "HashtagOutlineRegular":
+        case "hashtag-outline-regular":
             return (
                 <View style={style}>
                     <HashtagOutlineRegular
@@ -2473,7 +2581,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "HashtagSolid":
+        case "hashtag-solid":
             return (
                 <View style={style}>
                     <HashtagSolid
@@ -2485,19 +2593,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "CameraOutlineRegular":
-            return (
-                <View style={style}>
-                    <CameraOutlineRegular
-                        width={size}
-                        height={size}
-                        preserveAspectRatio="true"
-                        stroke={color}
-                        fill={color}
-                    />
-                </View>
-            );
-        case "HeartOutlineBold":
+        case "heart-outline-bold":
             return (
                 <View style={style}>
                     <HeartOutlineBold
@@ -2509,7 +2605,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "HeartOutlineRegular":
+        case "heart-outline-regular":
             return (
                 <View style={style}>
                     <HeartOutlineRegular
@@ -2521,7 +2617,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "HeartSolid":
+        case "heart-solid":
             return (
                 <View style={style}>
                     <HeartSolid
@@ -2533,7 +2629,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Hide":
+        case "hide":
             return (
                 <View style={style}>
                     <Hide
@@ -2545,7 +2641,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "HistoryBold":
+        case "history-bold":
             return (
                 <View style={style}>
                     <HistoryBold
@@ -2557,7 +2653,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "HistoryRegular":
+        case "history-regular":
             return (
                 <View style={style}>
                     <HistoryRegular
@@ -2569,7 +2665,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ImageNavBold":
+        case "image-nav-bold":
             return (
                 <View style={style}>
                     <ImageNavBold
@@ -2581,7 +2677,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ImageNavRegular":
+        case "image-nav-regular":
             return (
                 <View style={style}>
                     <ImageNavRegular
@@ -2593,7 +2689,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "LiveOutlineBold":
+        case "live-outline-bold":
             return (
                 <View style={style}>
                     <LiveOutlineBold
@@ -2605,7 +2701,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "LiveOutlineRegular":
+        case "live-outline-regular":
             return (
                 <View style={style}>
                     <LiveOutlineRegular
@@ -2617,7 +2713,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "LiveSolid":
+        case "live-solid":
             return (
                 <View style={style}>
                     <LiveSolid
@@ -2629,7 +2725,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Loading":
+        case "loading":
             return (
                 <View style={style}>
                     <Loading
@@ -2641,7 +2737,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MagnifyBold":
+        case "magnify-bold":
             return (
                 <View style={style}>
                     <MagnifyBold
@@ -2653,7 +2749,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MagnifyRegular":
+        case "magnify-regular":
             return (
                 <View style={style}>
                     <MagnifyRegular
@@ -2665,7 +2761,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MessageOutlineBold":
+        case "message-outline-bold":
             return (
                 <View style={style}>
                     <MessageOutlineBold
@@ -2677,7 +2773,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MessageOutlineRegular":
+        case "message-outline-regular":
             return (
                 <View style={style}>
                     <MessageOutlineRegular
@@ -2689,7 +2785,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MessageSolid":
+        case "message-solid":
             return (
                 <View style={style}>
                     <MessageSolid
@@ -2701,7 +2797,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Minimize":
+        case "minimize":
             return (
                 <View style={style}>
                     <Minimize
@@ -2713,7 +2809,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MoreOutline":
+        case "more-outline":
             return (
                 <View style={style}>
                     <MoreOutline
@@ -2725,7 +2821,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MoreSolid":
+        case "more-solid":
             return (
                 <View style={style}>
                     <MoreSolid
@@ -2737,7 +2833,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MuteOutlineBold":
+        case "mute-outline-bold":
             return (
                 <View style={style}>
                     <MuteOutlineBold
@@ -2749,7 +2845,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MuteOutlineRegular":
+        case "mute-outline-regular":
             return (
                 <View style={style}>
                     <MuteOutlineRegular
@@ -2761,7 +2857,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "MuteSolid":
+        case "mute-solid":
             return (
                 <View style={style}>
                     <MuteSolid
@@ -2773,7 +2869,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Next":
+        case "next":
             return (
                 <View style={style}>
                     <Next
@@ -2785,7 +2881,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "NotificationOutlineBold":
+        case "notification-outline-bold":
             return (
                 <View style={style}>
                     <NotificationOutlineBold
@@ -2797,7 +2893,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "NotificationOutlineRegular":
+        case "notification-outline-regular":
             return (
                 <View style={style}>
                     <NotificationOutlineRegular
@@ -2809,7 +2905,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "NotificationSolid":
+        case "notification-solid":
             return (
                 <View style={style}>
                     <NotificationSolid
@@ -2821,7 +2917,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PaperClipBold":
+        case "paperclip-bold":
             return (
                 <View style={style}>
                     <PaperClipBold
@@ -2833,7 +2929,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PaperClipRegular":
+        case "paperclip-regular":
             return (
                 <View style={style}>
                     <PaperClipRegular
@@ -2845,7 +2941,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Pause":
+        case "pause":
             return (
                 <View style={style}>
                     <Pause
@@ -2857,7 +2953,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PhoneOutlineBold":
+        case "phone-outline-bold":
             return (
                 <View style={style}>
                     <PhoneOutlineBold
@@ -2869,7 +2965,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PhoneOutlineRegular":
+        case "phone-outline-regular":
             return (
                 <View style={style}>
                     <PhoneOutlineRegular
@@ -2881,7 +2977,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PhoneSolid":
+        case "phone-solid":
             return (
                 <View style={style}>
                     <PhoneSolid
@@ -2893,7 +2989,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Play":
+        case "play":
             return (
                 <View style={style}>
                     <Play
@@ -2905,7 +3001,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PlaybackBackward":
+        case "playback-backward":
             return (
                 <View style={style}>
                     <PlaybackBackward
@@ -2917,7 +3013,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PlaybackForward":
+        case "playback-forward":
             return (
                 <View style={style}>
                     <PlaybackForward
@@ -2929,7 +3025,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PlaylistAdd":
+        case "playlist-add":
             return (
                 <View style={style}>
                     <PlaylistAdd
@@ -2941,7 +3037,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PlaylistCheck":
+        case "playlist-check":
             return (
                 <View style={style}>
                     <PlaylistCheck
@@ -2953,7 +3049,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PlusOutlineBold":
+        case "plus-outline-bold":
             return (
                 <View style={style}>
                     <PlusOutlineBold
@@ -2965,7 +3061,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "PlusOutlineRegular":
+        case "plus-outline-regular":
             return (
                 <View style={style}>
                     <PlusOutlineRegular
@@ -2977,7 +3073,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Previous":
+        case "previous":
             return (
                 <View style={style}>
                     <Previous
@@ -2989,7 +3085,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "RemoveSong":
+        case "remove-song":
             return (
                 <View style={style}>
                     <RemoveSong
@@ -3001,7 +3097,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Retry":
+        case "retry":
             return (
                 <View style={style}>
                     <Retry
@@ -3013,7 +3109,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "SendOutlineRegular":
+        case "send-outline-regular":
             return (
                 <View style={style}>
                     <SendOutlineRegular
@@ -3025,7 +3121,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "SendOutlineBold":
+        case "send-outline-bold":
             return (
                 <View style={style}>
                     <SendOutlineBold
@@ -3037,7 +3133,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "SendSolid":
+        case "send-solid":
             return (
                 <View style={style}>
                     <SendSolid
@@ -3049,7 +3145,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ShareOutlineBold":
+        case "share-outline-bold":
             return (
                 <View style={style}>
                     <ShareOutlineBold
@@ -3061,7 +3157,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ShareOutlineRegular":
+        case "share-outline-regular":
             return (
                 <View style={style}>
                     <ShareOutlineRegular
@@ -3073,7 +3169,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "ShareSolid":
+        case "share-solid":
             return (
                 <View style={style}>
                     <ShareSolid
@@ -3085,7 +3181,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "Show":
+        case "show":
             return (
                 <View style={style}>
                     <Show
@@ -3097,7 +3193,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "TagOutlineBold":
+        case "tag-outline-bold":
             return (
                 <View style={style}>
                     <TagOutlineBold
@@ -3109,7 +3205,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "TagOutlineRegular":
+        case "tag-outline-regular":
             return (
                 <View style={style}>
                     <TagOutlineRegular
@@ -3121,7 +3217,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "TrendingOutlineBold":
+        case "trending-outline-bold":
             return (
                 <View style={style}>
                     <TrendingOutlineBold
@@ -3133,7 +3229,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "TrendingOutlineRegular":
+        case "trending-outline-regular":
             return (
                 <View style={style}>
                     <TrendingOutlineRegular
@@ -3145,7 +3241,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "TrendingSolid":
+        case "trending-solid":
             return (
                 <View style={style}>
                     <TrendingSolid
@@ -3157,7 +3253,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "UserOutlineBold":
+        case "user-outline-bold":
             return (
                 <View style={style}>
                     <UserOutlineBold
@@ -3169,7 +3265,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "UserOutlineRegular":
+        case "user-outline-regular":
             return (
                 <View style={style}>
                     <UserOutlineRegular
@@ -3181,7 +3277,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "UserSolid":
+        case "user-solid":
             return (
                 <View style={style}>
                     <UserSolid
@@ -3193,7 +3289,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VideoOutlineBold":
+        case "video-outline-bold":
             return (
                 <View style={style}>
                     <VideoOutlineBold
@@ -3205,7 +3301,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VideoOutlineRegular":
+        case "video-outline-regular":
             return (
                 <View style={style}>
                     <VideoOutlineRegular
@@ -3217,7 +3313,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VideoSolid":
+        case "video-solid":
             return (
                 <View style={style}>
                     <VideoSolid
@@ -3229,7 +3325,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VolumeHighOutline":
+        case "volume-high-outline":
             return (
                 <View style={style}>
                     <VolumeHighOutline
@@ -3241,7 +3337,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VolumeHighSolid":
+        case "volume-high-solid":
             return (
                 <View style={style}>
                     <VolumeHighSolid
@@ -3253,7 +3349,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VolumeLowOutline":
+        case "volume-low-outline":
             return (
                 <View style={style}>
                     <VolumeLowOutline
@@ -3265,7 +3361,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VolumeLowSolid":
+        case "volume-low-solid":
             return (
                 <View style={style}>
                     <VolumeLowSolid
@@ -3277,7 +3373,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VolumeMediumOutline":
+        case "volume-medium-outline":
             return (
                 <View style={style}>
                     <VolumeMediumOutline
@@ -3289,7 +3385,7 @@ const Icon = ({
                     />
                 </View>
             );
-        case "VolumeMediumSolid":
+        case "volume-medium-solid":
             return (
                 <View style={style}>
                     <VolumeMediumSolid

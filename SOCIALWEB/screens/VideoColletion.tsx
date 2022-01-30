@@ -17,13 +17,13 @@ const VideoCollection = () => {
             edges={["left", "right"]}
             style={[globalLayouts.tabLayout, globalColors.screenColor]}
         >
-            <Icon name="BookmarkOutlineBold" size={32} color="red" />
-            <Icon name="AroundTheClockRegular" size={32} color="red" />
-            <Icon name="ArrowDown" size={32} color="red" />
-            <Icon name="BookmarkOutlineRegular" size={32} color="red" />
-            <Icon name="EditSolid" size={32} color="red" />
-            <Icon name="HistoryRegular" size={32} color="red" />
-            <Icon name="TrendingSolid" size={32} color="red" />
+            <Icon name="bookmark-outline-bold" size={32} color="red" />
+            <Icon name="around-the-clock-regular" size={32} color="red" />
+            <Icon name="arrow-down" size={32} color="red" />
+            <Icon name="bookmark-outline-bold" size={32} color="red" />
+            <Icon name="edit-solid" size={32} color="red" />
+            <Icon name="history-regular" size={32} color="red" />
+            <Icon name="trending-solid" size={32} color="red" />
         </SafeAreaView>
     );
 };
